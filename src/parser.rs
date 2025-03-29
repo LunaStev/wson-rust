@@ -19,7 +19,7 @@ pub fn remove_comments(input: &str) -> String {
         let mut l = line.to_string();
         if in_block {
             if let Some(end) = l.find("*/") {
-                l = &l[end + 2..];
+                l = l[end + 2..].to_string();
                 in_block = false;
             } else {
                 continue;
