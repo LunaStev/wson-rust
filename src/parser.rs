@@ -16,7 +16,7 @@ pub fn remove_comments(input: &str) -> String {
     let mut in_block = false;
 
     for line in input.lines() {
-        let mut l = line;
+        let mut l = line.to_string();
         if in_block {
             if let Some(end) = l.find("*/") {
                 l = &l[end + 2..];
