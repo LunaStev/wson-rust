@@ -1,8 +1,13 @@
 [package]
 name = "wson"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
+authors = ["LunaStev <lunastev@gurmstudis.com>"]
+description = "WSON data serialization parser "
+license = "MPL-2.0"
+repository = "https://github.com/Wave/wson-rust"
+publish = true
 
-[dependencies]
-chrono = "0.4.39"
-regex = "1.11.1"
+[lib]
+name = "wson"
+path = "src/lib.rs"
