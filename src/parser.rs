@@ -39,7 +39,7 @@ pub fn remove_comments(input: &str) -> String {
         }
 
         if let Some(index) = l.find("//") {
-            l = &l[..index];
+            l.truncate(index);
         } else if let Some(index) = l.find('#') {
             l = &l[..index];
         }
