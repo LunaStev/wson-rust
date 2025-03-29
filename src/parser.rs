@@ -28,7 +28,8 @@ pub fn remove_comments(input: &str) -> String {
 
         while let Some(start) = l.find("/*") {
             if let Some(end) = l[start + 2..].find("*/") {
-                l = &*[&l[..start], &l[start + 2 + end + 2..]].concat();
+                let combined = [&l[..start], &l[start + 2 + end + 2..]].concat();
+                l = &combined;
             } else {
                 l = &l[..start];
                 in_block = true;
