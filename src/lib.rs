@@ -1,14 +1,36 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
+pub mod error;
+pub mod parser;
+pub mod serializer;
+
+use error::{WsonParseError, WsonSerializeError};
+use parser::parse_wson;
+use serializer::serialize_wson;
+use std::collections::BTreeMap;
+
+pub type WsonMap = BTreeMap<String, WsonValue>;
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum WsonValue {
+    Null,
+    Bool(bool),
+    Int(i64),
+    Float(f64),
+    String(String),
+    Date(String),
+    DateTime(String),
+    Version(Vec<u32>),
+    Array(Vec<WsonValue>),
+    Object(WsonMap),
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+pub fn loads(input: &str) -> Result<WsonMap, WsonParseError> {
+    parse_wson(input)
+}
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+pub fn dumps(data: &WsonMap) -> Result<String, WsonSerializeError> {
+    serialize_wson(data)
+}
+
+pub fn validate(input: &str) -> bool {
+    parse_wson(input).is_ok()
 }
