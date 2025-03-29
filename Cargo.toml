@@ -9,7 +9,7 @@ repository = "https://github.com/Wave/wson-rust"
 publish = true
 
 [lib]
-name = "wson"
+name = "wson_rs"
 path = "src/lib.rs"
 
 [dependencies]
