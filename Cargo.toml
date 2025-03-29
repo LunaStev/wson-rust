@@ -1,5 +1,5 @@
 [package]
-name = "wson"
+name = "wson_rs"
 version = "0.1.0"
 edition = "2021"
 authors = ["LunaStev <lunastev@gurmstudis.com>"]
@@ -11,6 +11,7 @@ publish = true
 [lib]
 name = "wson"
 path = "src/lib.rs"
+
 [dependencies]
 chrono = "0.4.39"
 regex = "1.11.1"
