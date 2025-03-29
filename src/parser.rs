@@ -32,7 +32,7 @@ pub fn remove_comments(input: &str) -> String {
                 let after = &l[start + 2 + end + 2..];
                 l = format!("{}{}", before, after);
             } else {
-                l = &l[..start];
+                l.truncate(start);
                 in_block = true;
                 break;
             }
