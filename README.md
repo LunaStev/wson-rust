@@ -26,5 +26,19 @@ WSON supports not only simple key-value pairs but also complex data structures l
 ## Benchmark
 ![output.png](.github/output.png)
 
+| Format | Operation  | Elapsed Time (ms) |
+|--------|------------|-------------------|
+| WSON   | Validate   | 4.604             |
+|        | Parse      | 0.219             |
+|        | Dump       | 0.059             |
+| JSON   | Parse      | 0.239             |
+|        | Dump       | 0.072             |
+| YAML   | Parse      | 0.524             |
+|        | Dump       | 0.277             |
+| TOML   | Parse      | 1.306             |
+|        | Dump       | 0.254             |
+
+
+
 ## Conclusion
 WSON reflects the philosophy of the Wave language by aiming for more efficient and powerful data serialization. It addresses the shortcomings of traditional JSON while retaining an intuitive syntax, making it easier for developers to adopt. Going forward, WSON will establish itself as the standard data format within the Wave ecosystem, delivering strong performance across various environments.
