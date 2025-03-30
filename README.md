@@ -1,6 +1,13 @@
 # Wave Serialization Object Notation
 WSON (Wave Serialized Object Notation) is the default data serialization format for the Wave programming language, designed to overcome the limitations of traditional JSON while providing enhanced functionality and efficiency. WSON maximizes performance while maintaining a human-readable and writable structure, enabling faster and safer data exchange across various environments.
 
+## Installation
+
+```toml
+[dependencies]
+wson_rs = "0.2.0"
+```
+
 ## Features
 ### 1. **Strict Type System**
 WSON maintains clear data types, eliminating the unpredictability caused by JSON's dynamic typing. This ensures type safety during serialization and deserialization.
