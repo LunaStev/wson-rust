@@ -49,3 +49,9 @@ impl WsonSerializeError {
         }
     }
 }
+
+impl From<fmt::Error> for WsonSerializeError {
+    fn from(err: fmt::Error) -> Self {
+        WsonSerializeError::new(format!("Formatting error: {}", err))
+    }
+}
