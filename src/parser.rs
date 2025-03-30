@@ -79,6 +79,14 @@ fn parse_value(value: &str, line: usize, column: usize) -> Result<WsonValue, Wso
         return Ok(WsonValue::Int(i));
     }
 
+    if VERSION_RE.is_match(value) {
+        let version = value
+            .split('.')
+            .filter_map(|v| v.parse::<u32>().ok())
+            .collect();
+        return Ok(WsonValue::Version(version));
+    }
+
     if let Ok(f) = value.parse::<f64>() {
         return Ok(WsonValue::Float(f));
     }
