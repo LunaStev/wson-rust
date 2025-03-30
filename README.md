@@ -24,7 +24,7 @@ WSON supports not only simple key-value pairs but also complex data structures l
 - Serialization and deserialization of large datasets
 
 ## Benchmark
-![output.png](.github/output.png)
+![output.png](https://github.com/LunaStev/wson-rust/blob/master/.github/output.png)
 
 | Format | Operation  | Elapsed Time (ms) |
 |--------|------------|-------------------|
