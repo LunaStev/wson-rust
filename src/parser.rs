@@ -70,8 +70,8 @@ fn parse_value(value: &str, line: usize, column: usize) -> Result<WsonValue, Wso
     if value.eq_ignore_ascii_case("false") {
         return Ok(WsonValue::Bool(false));
     }
-    
-    if value.to_lowercase() == "null" {
+
+    if value.eq_ignore_ascii_case("null") {
         return Ok(WsonValue::Null);
     }
 
