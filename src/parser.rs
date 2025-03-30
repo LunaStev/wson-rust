@@ -3,6 +3,9 @@ use crate::error::WsonParseError;
 use std::collections::BTreeMap;
 use chrono::{NaiveDate, NaiveDateTime};
 use regex::Regex;
+use once_cell::sync::Lazy;
+
+static VERSION_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"^\d+(\.\d+)+$").unwrap());
 
 pub type WsonMap = BTreeMap<String, WsonValue>;
 
@@ -12,40 +15,41 @@ pub fn parse_wson(input: &str) -> Result<WsonMap, WsonParseError> {
 }
 
 pub fn remove_comments(input: &str) -> String {
-    let mut result = String::new();
+    let mut result = String::with_capacity(input.len());
     let mut in_block = false;
 
-    for line in input.lines() {
-        let mut l = line.to_string();
+    for mut line in input.lines() {
         if in_block {
-            if let Some(end) = l.find("*/") {
-                l = l[end + 2..].to_string();
+            if let Some(end) = line.find("*/") {
+                line = &line[end + 2..];
                 in_block = false;
             } else {
                 continue;
             }
         }
 
-        while let Some(start) = l.find("/*") {
-            if let Some(end) = l[start + 2..].find("*/") {
-                let before = &l[..start];
-                let after = &l[start + 2 + end + 2..];
-                l = format!("{}{}", before, after);
+        while let Some(start) = line.find("/*") {
+            if let Some(end) = line[start + 2..].find("*/") {
+                let end_pos = start + 2 + end + 2;
+                let before = &line[..start];
+                let after = &line[end_pos..];
+                line = &format!("{}{}", before, after); // 잠깐은 복사됨
             } else {
-                l.truncate(start);
+                line = &line[..start];
                 in_block = true;
                 break;
             }
         }
 
-        if let Some(index) = l.find("//") {
-            l.truncate(index);
-        } else if let Some(index) = l.find('#') {
-            l.truncate(index);
+        if let Some(index) = line.find("//") {
+            line = &line[..index];
+        } else if let Some(index) = line.find('#') {
+            line = &line[..index];
         }
 
-        if !l.trim().is_empty() {
-            result.push_str(l.trim_end());
+        let trimmed = line.trim_end();
+        if !trimmed.is_empty() {
+            result.push_str(trimmed);
             result.push('\n');
         }
     }
@@ -97,15 +101,6 @@ fn parse_value(value: &str, line: usize, column: usize) -> Result<WsonValue, Wso
 
     if let Ok(dt) = NaiveDateTime::parse_from_str(value, "%Y-%m-%d %H:%M:%S") {
         return Ok(WsonValue::DateTime(dt.to_string()));
-    }
-
-    let version_re = Regex::new(r"^\d+(\.\d+)+$").unwrap();
-    if version_re.is_match(value) {
-        let version = value
-            .split('.')
-            .filter_map(|v| v.parse::<u32>().ok())
-            .collect();
-        return Ok(WsonValue::Version(version));
     }
 
     if value.starts_with('{') && value.ends_with('}') {
