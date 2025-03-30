@@ -1,6 +1,7 @@
 use crate::WsonValue;
 use crate::error::WsonParseError;
 use std::collections::BTreeMap;
+use std::borrow::Cow;
 use chrono::{NaiveDate, NaiveDateTime};
 use regex::Regex;
 use once_cell::sync::Lazy;
@@ -18,10 +19,12 @@ pub fn remove_comments(input: &str) -> String {
     let mut result = String::with_capacity(input.len());
     let mut in_block = false;
 
-    for mut line in input.lines() {
+    for raw_line in input.lines() {
+        let mut line: Cow<str> = Cow::Borrowed(raw_line);
+
         if in_block {
             if let Some(end) = line.find("*/") {
-                line = &line[end + 2..];
+                line = Cow::Borrowed(&line[end + 2..]);
                 in_block = false;
             } else {
                 continue;
@@ -33,18 +36,18 @@ pub fn remove_comments(input: &str) -> String {
                 let end_pos = start + 2 + end + 2;
                 let before = &line[..start];
                 let after = &line[end_pos..];
-                line = &format!("{}{}", before, after); // 잠깐은 복사됨
+                line = Cow::Owned(format!("{}{}", before, after));
             } else {
-                line = &line[..start];
+                line = Cow::Borrowed(&line[..start]);
                 in_block = true;
                 break;
             }
         }
 
         if let Some(index) = line.find("//") {
-            line = &line[..index];
+            line = Cow::Borrowed(&line[..index]);
         } else if let Some(index) = line.find('#') {
-            line = &line[..index];
+            line = Cow::Borrowed(&line[..index]);
         }
 
         let trimmed = line.trim_end();
