@@ -23,6 +23,8 @@ WSON supports not only simple key-value pairs but also complex data structures l
 - File storage and configuration file formats
 - Serialization and deserialization of large datasets
 
+## Benchmark
+![output.png](.github/output.png)
 
 ## Conclusion
 WSON reflects the philosophy of the Wave language by aiming for more efficient and powerful data serialization. It addresses the shortcomings of traditional JSON while retaining an intuitive syntax, making it easier for developers to adopt. Going forward, WSON will establish itself as the standard data format within the Wave ecosystem, delivering strong performance across various environments.
