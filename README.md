@@ -1,11 +1,13 @@
 # Wave Serialization Object Notation
 WSON (Wave Serialized Object Notation) is the default data serialization format for the Wave programming language, designed to overcome the limitations of traditional JSON while providing enhanced functionality and efficiency. WSON maximizes performance while maintaining a human-readable and writable structure, enabling faster and safer data exchange across various environments.
 
+📄 Full syntax documentation: wave-lang.dev/docs/wson/
+
 ## Installation
 
 ```toml
 [dependencies]
-wson_rs = "0.2.0"
+wson_rs = "0.2.1"
 ```
 
 ## Features
@@ -24,11 +26,41 @@ While maintaining a syntax similar to JSON, WSON allows for more concise express
 ### 5. **Support for Various Data Structures**
 WSON supports not only simple key-value pairs but also complex data structures like native arrays, structs, and tuples, enabling more flexible data representation.
 
-## Use Cases
-- Data storage and transmission for Wave-based applications
-- Network communication and API data formats
-- File storage and configuration file formats
-- Serialization and deserialization of large datasets
+## 📚 Example
+vex.ws (WSON format):
+
+```wson
+{
+    name = "wave_project",
+    version = 0.1.0,
+    lib = true,
+
+    dependencies = [
+        { name = "core", version = 1.0.0 },
+        { name = "wson", version = 0.1.1 }
+    ]
+}
+```
+Rust usage with wson_rs:
+
+```rust
+use wson_rs::{loads, dumps, validate, WsonValue};
+
+fn main() {
+let content = std::fs::read_to_string("vex.ws").unwrap();
+
+    if validate(&content) {
+        let data = loads(&content).unwrap();
+
+        if let Some(WsonValue::String(name)) = data.get("name") {
+            println!("Project name: {name}");
+        }
+
+        let serialized = dumps(&data).unwrap();
+        println!("Serialized WSON:\n{serialized}");
+    }
+}
+```
 
 ## Benchmark
 ![output.png](https://github.com/LunaStev/wson-rust/blob/master/.github/output.png)
@@ -45,7 +77,11 @@ WSON supports not only simple key-value pairs but also complex data structures l
 | TOML   | Parse      | 1.306             |
 |        | Dump       | 0.254             |
 
-
+📊 Benchmark results were generated using `wson_rs` v0.2.1 on a mid-range development machine.
 
 ## Conclusion
-WSON reflects the philosophy of the Wave language by aiming for more efficient and powerful data serialization. It addresses the shortcomings of traditional JSON while retaining an intuitive syntax, making it easier for developers to adopt. Going forward, WSON will establish itself as the standard data format within the Wave ecosystem, delivering strong performance across various environments.
+WSON reflects the philosophy of the Wave language by aiming for more efficient and powerful data serialization. It addresses the shortcomings of traditional JSON while retaining an intuitive syntax, making it easier for developers to adopt.
+
+Going forward, WSON will establish itself as the standard data format within the Wave ecosystem — clean, fast, and human-friendly.
+
+📖 Read more at: wave-lang.dev/docs/wson/
