@@ -7,7 +7,7 @@ WSON (Wave Serialized Object Notation) is the default data serialization format 
 
 ```toml
 [dependencies]
-wson_rs = "0.2.2"
+wson_rs = "0.2.3"
 ```
 
 ## Features
