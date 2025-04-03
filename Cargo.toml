@@ -1,6 +1,6 @@
 [package]
 name = "wson_rs"
-version = "0.2.3"
+version = "0.2.4"
 edition = "2021"
 authors = ["LunaStev <lunastev@gurmstudios.com>"]
 description = "WSON data serialization parser "
