@@ -1,8 +1,8 @@
 [package]
 name = "wson_rs"
-version = "0.2.2"
+version = "0.2.3"
 edition = "2021"
-authors = ["LunaStev <lunastev@gurmstudis.com>"]
+authors = ["LunaStev <lunastev@gurmstudios.com>"]
 description = "WSON data serialization parser "
 license = "MPL-2.0"
 repository = "https://github.com/LunaStev/wson-rust"
